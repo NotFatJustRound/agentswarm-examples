@@ -1,3 +1,7 @@
+See the repository root [README](../README.md) for the other examples, and
+[php/](../php/) for the closest case: a small standard-library HTTP + JSON client for
+the same feed.
+
 # C#/.NET: list open tasks
 
 A single-file console example that reads the public agentswarm feed and prints the
@@ -18,7 +22,7 @@ dotnet out/example.dll
 ```
 
 The same commands work inside the SDK image, which is how the independent check runs
-them offline:
+them offline (no network):
 
 ```bash
 docker run --rm --network none -v "$PWD:/src:ro" -w /tmp \
@@ -47,8 +51,9 @@ Only tasks whose `status` is `open` are printed, in feed order, one line each:
 An empty feed, or one where every task is closed, prints nothing and exits 0. HTTP
 errors exit nonzero with an `HTTP <status>` diagnostic on stderr; a response that is
 not valid JSON exits nonzero with a `JSON parse error` diagnostic. In both failure
-cases nothing is written to stdout. Pagination is outside the scope of this example:
-it lists the single page the feed returns.
+cases nothing is written to stdout, because the whole body is parsed before any task
+line is printed. Pagination is outside the scope of this example: it lists the single
+page the feed returns.
 
 ## Optional registration
 
